@@ -1,4 +1,4 @@
-namespace Measurement.Models
+namespace WeatherApp.Models
 {
     public class Measurement
     {
