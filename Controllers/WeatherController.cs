@@ -1,4 +1,7 @@
+using System.Diagnostics.Metrics;
 using Microsoft.AspNetCore.Mvc;
+using Npgsql;
+using WeatherApp.Models;
 
 namespace WeatherApp.Controllers;
 
@@ -16,12 +19,16 @@ public class WeatherController : ControllerBase
     }
 
 
-    [HttpGet("today")]
+[HttpGet("today")]
 
-    public string WeatherToday()
+    public Measurement WeatherToday([FromQuery] string location = "Ulko")
     {
-        _logger.LogInformation("joo");
-        return "Test";
+        string sql = $"SELECT * FROM MEASUREMENT WHERE NAME = '{location}' ORDER BY ID DESC LIMIT 1; ";
+
+        Measurement measurement = new();
+        measurement.SearchFromDatabase(sql);
+
+        return measurement;
     }
 
 }
